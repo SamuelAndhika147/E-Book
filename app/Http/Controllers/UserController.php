@@ -162,10 +162,6 @@ class UserController extends Controller
     }
      
 
-
-
-
-
     public function notFound(){
         return view('404');
     }
