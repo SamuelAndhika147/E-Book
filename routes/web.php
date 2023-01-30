@@ -19,6 +19,7 @@ use App\Http\Controllers\UserController;
 Route::middleware('isLogin')->group(function(){
     Route::get('/dashboard-user', [UserController::class, 'dashboardUser']);
     Route::get('/read/{id}', [UserController::class, 'readBook']);
+    Route::get('/download/{id}', [BookController::class, 'downloadBook']);
 });
 
 //Role Admin
@@ -38,7 +39,7 @@ Route::middleware('isAdmin')->group(function(){
     Route::patch('/update-book/{id}', [BookController::class, 'update']);
     Route::delete('/destroy-book/{id}', [BookController::class, 'destroy']);
 
-    // Cretae Category
+    // Create Category
     Route::get('/category', [UserController::class, 'category']);
     Route::post('/post-category', [UserController::class, 'postCategory']);
     Route::delete('/destroy-category/{id}', [UserController::class, 'destroyCategory']);

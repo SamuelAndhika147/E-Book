@@ -235,16 +235,7 @@ body{
 }
 
 .create-book form .label .file::-webkit-file-upload-button{
-    visibility: hidden;
-}
-
-.create-book form .label .file::before{
-    content: 'Select Cover form device';
-    color: grey;
-    border: 1px solid black;
-
-    padding: 0.5rem 3rem 0.5rem 0.5rem;
-    margin: 0;
+    visibility: visible;
 }
 
 .create-book form .label .file:hover{

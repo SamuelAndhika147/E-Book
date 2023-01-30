@@ -9,6 +9,10 @@ class Category extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'category',
+        'kategori',
     ];
+
+    public function relasiCategory(){
+        return $this->hasOne(Book::class);
+    }
 }

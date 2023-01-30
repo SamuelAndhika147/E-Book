@@ -8,6 +8,11 @@
 @section('content')
 <div class="nav" data-aos="fade-down" data-aos-duration="800">
     <h2>E-BOOK</h2>
+    <select name="" id="">
+        @foreach($categories as $item)
+        <option value="{{ $item->category }}" @selected(old('item_id') == $item->category)>{{ $item->category }}</option>
+        @endforeach
+    </select>
     <div class="link">
         <a id="landing" href="#">Hi, {{ $user->name }}</a>
         @if (Auth::check())

@@ -47,4 +47,48 @@
         @endif
     </div>
 </div>
+
+<section id="footer"  data-aos="fade-up" data-aos-duration="800">
+    <div class="container-footer">
+        <div class="logo">
+            <img src="/img/logo-wk.png" alt="">
+        </div>
+        <div class="tautan">
+            <strong>
+                TAUTAN
+            </strong>
+            <ul>
+                @if (Auth::check())
+                <a href="/logout">Logout</a>
+                @if (Auth()->user()->role == 'user')
+                <a href="/dashboard-user">Home</a>
+                @endif
+                @if (Auth()->user()->role == 'admin')
+                <a href="/dashboard">Dashboard</a>
+                @endif
+                @else
+                <a href="/login">Login</a>
+                @endif
+                <a href="/">Beranda</a>
+            </ul>
+        </div>
+        <div class="contact">
+            <strong>
+                KONTAK SEKOLAH
+            </strong>
+            <h4>0251-8242411</h4>
+            <p>ALamat
+                <br>
+                Jl. Raya Wangun <br>
+                Kelurahan Sindangsari
+                <br>
+                Bogor Timur 16720
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="copy-right">
+    <p>Copyright © 2023 Samuel Andhika Prasetyo</p>
+</section>
 @endsection

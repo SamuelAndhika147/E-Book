@@ -59,10 +59,10 @@
             <div class="left">
                 <div class="label">
                     <label for="">Category Book</label>
-                    <select name="category" placeholder="Input book's category">
+                    <select name="kategori" placeholder="Input book's category">
                         <option hidden>Input book's category</option>
-                        @foreach ($category as $item)
-                        <option value="{{ $item->category }}">{{ $item->category }}</option>
+                        @foreach ($kategori as $item)
+                        <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -79,9 +79,15 @@
                 </div>
                 <div class="label">
                     <label for="">Synopsis</label>
-                    <textarea name="synopsis" value="{{ $book->synopsis }}" id="" cols="30" rows="2"></textarea>
+                    <textarea name="synopsis" id="" cols="30" rows="2"> {{ $book->synopsis }}</textarea>
                 </div>
             </div>
+        </div>
+
+        
+        <div class="label">
+            <label for="">PDF</label>
+            <input type="file" class="file" src="" alt="" name="pdf">
         </div>
 
         <button type="submit">Submit</button>

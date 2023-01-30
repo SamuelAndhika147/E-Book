@@ -6,6 +6,8 @@ use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BookController extends Controller
 {
@@ -41,7 +43,7 @@ class BookController extends Controller
             'title' => 'required',
             'writer' => 'required',
             'publisher' => 'required',
-            'category' => 'required',
+            'kategori' => 'required',
             'isbn' => 'required',
             'synopsis' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
@@ -59,17 +61,29 @@ class BookController extends Controller
             $uploaded = $image->getClientOriginalName();
         }
 
+        if($request['pdf']){
+            $pdf = $request->file('pdf')->store('pdf');
+        }
+
         Book::create([
             'title' => $request->title,
             'writer' => $request->writer,
             'publisher' => $request->publisher,
-            'category' => $request->category,
+            'kategori' => $request->kategori,
             'image' => $uploaded,
+            'pdf' => $pdf,
             'isbn' => $request->isbn,
             'synopsis' => $request->synopsis,
         ]);
 
+        Alert::success('Success', 'Success Input E-Book!');
         return redirect('/create');
+    }
+
+    // Download Book
+    public function downloadBook($id_book){
+        $book = Book::findOrfail($id_book);
+        return Storage::download($book->pdf, str_replace(' ','-', $book->title .'.pdf' ));
     }
 
     /**
@@ -91,9 +105,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::all();
+        $kategori = Category::all();
         $book = Book::where('id', $id)->first();
-        return view('edit-book', compact('book', 'category'));
+        return view('edit-book', compact('book', 'kategori'));
     }
 
     /**
@@ -109,7 +123,7 @@ class BookController extends Controller
             'title' => 'required',
             'writer' => 'required',
             'publisher' => 'required',
-            'category' => 'required',
+            'kategori' => 'required',
             'isbn' => 'required',
             'synopsis' => 'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,svg,gif',
@@ -125,19 +139,27 @@ class BookController extends Controller
         } else {
             $uploaded = $image->getClientOriginalName();
         }
+        
+        if($request['pdf']){
+            $pdf = $request->file('pdf')->store('pdf');
+        }
 
         Book::where('id', $id)->update([
             'title' => $request->title,
             'writer' => $request->writer,
             'publisher' => $request->publisher,
-            'category' => $request->category,
+            'kategori' => $request->kategori,
             'image' => $uploaded,
+            'pdf' => $pdf,
             'isbn' => $request->isbn,
             'synopsis' => $request->synopsis,
         ]);
 
+        Alert::success('Success', 'Success Update E-Book!');
         return redirect('/create');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -148,6 +170,8 @@ class BookController extends Controller
     public function destroy($id)
     {
         Book::where('id', $id)->delete();
+        
+        Alert::success('Success', 'Success Delete E-Book!');
         return redirect('/create');
     }
 }

@@ -26,12 +26,16 @@
     <div class="content">
         <img src="/img/cover-books/{{ $book->image }}" alt="img">
         <div class="description">
+            {{ $book->category }}
             <p>Judul : {{ $book->title }}</p>
             <p>Penulis : {{ $book->writer }}</p>
             <p>Penerbit : {{ $book->publisher }}</p>
             <p>No ISBN : {{ $book->isbn }}</p>
             <h3>Sinopsis : </h3>
-            <p>{{ $book->synopsis }}</p>
+            <p id="scroll">{{ $book->synopsis }}</p>
+            <a href="/download/{{ $book->id }}">
+                <button>Download</button>
+            </a>
         </div>
     </div>
 </div>

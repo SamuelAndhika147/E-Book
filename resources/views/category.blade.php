@@ -34,38 +34,54 @@
         @csrf
         <div class="label">
             <label for="">Category</label>
-            <input type="text" name="category" placeholder="Input category">
+            <input type="text" name="kategori" placeholder="Input category">
         </div>
         <button type="submit">Submit</button>
     </form>
 </div>
 
 <div class="table-book" data-aos="flip-up" data-aos-duration="800">
-    <table>
-        <tr>
-            <th>No</th>
-            <th>ID</th>
-            <th>Category Name</th>
-            <th>Action</th>
-        </tr>
+    <table class="example">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID</th>
+                <th>Category Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
         @php
         $no=1;
         @endphp
-        @foreach ( $category as $no => $item)
-        <tr>
-            <td>{{ ++$no }}</td>
-            <td>{{ $item->id }}</td>
-            <td>{{ $item->category }}</td>
-            <td>
-                <div class="action">
-                    <form action="/destroy-category/{{ $item->id }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        @endforeach
+        <tbody>
+            @foreach ( $category as $no => $item)
+            <tr>
+                <td>{{ ++$no }}</td>
+                <td>{{ $item->id }}</td>
+                <td>{{ $item->kategori }}</td>
+                <td>
+                    <div class="action">
+                        <form action="/destroy-category/{{ $item->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
     </table>
-@endsection
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    </script>
+    @endsection

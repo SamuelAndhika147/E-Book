@@ -15,6 +15,7 @@ class Book extends Model
         'publisher',
         'category',
         'image',
+        'pdf',
         'isbn',
         'synopsis',
     ];

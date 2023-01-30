@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class UserController extends Controller
 {
@@ -31,7 +34,8 @@ class UserController extends Controller
     public function dashboardUser(){
         $user = User::where('id', Auth::user()->id)->first();
         $book = Book::all();
-        return view('dashboard-user', compact('book', 'user'));
+        $categories = Category::all();
+        return view('dashboard-user', compact('book', 'user', 'categories'));
     }
 
     public function readBook($id){
@@ -51,9 +55,9 @@ class UserController extends Controller
     }
 
     public function create(){
-        $category = Category::all();
+        $kategori = Category::all();
         $book = Book::all();
-        return view('create', compact('book', 'category'));
+        return view('create', compact('book', 'kategori'));
     }
     
     public function category(){
@@ -108,9 +112,13 @@ class UserController extends Controller
 
         $validatedata['password'] = bcrypt($validatedata['password']);
 
-        User::create($validatedata);
-
-        return redirect('/')->with('berhasil', 'Register Berhasil, Silahkan Login!');
+        if (User::create($validatedata)){
+        Alert::success('Success', 'Success Register!');
+        return redirect('/');
+        } 
+        Alert::error('Error', 'Error to Register, please fill all the form!');
+        return redirect('/');
+        
     }
 
     public function postLogin(Request $request){
@@ -123,12 +131,15 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (Auth()->user()->role == 'admin'){
+                Alert::success('Success', 'Success Login sebagai admin!');
                 return redirect('/dashboard');
             } else {
-                return redirect()->intended('/dashboard-user')->with('berhasil', 'Login Berhasil');
+                Alert::success('Success', 'Success Login!');
+                return redirect()->intended('/dashboard-user');
             }
         }
 
+        Alert::error('Error', 'Failed Login, perhatikan email atau passwordnya!');
         return back();
     }
 
@@ -137,6 +148,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         
+        Alert::info('Info', 'Berhasil Logout!');
         return redirect('/');
     }
 
@@ -146,11 +158,11 @@ class UserController extends Controller
     //Category
     public function postCategory(Request $request){
         $request->validate([
-            'category' => 'required'
+            'kategori' => 'required'
         ]);
 
         Category::create([
-            'category' =>$request->category,
+            'kategori' =>$request->kategori,
         ]);
         
         return back();
@@ -162,6 +174,7 @@ class UserController extends Controller
     }
      
 
+    
     public function notFound(){
         return view('404');
     }

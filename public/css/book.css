@@ -74,8 +74,31 @@ body{
 
 .container .content img{
     max-width: 300px;
-    height: auto;
+    max-height: 150px;
     
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.container .content .description #scroll{
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+.container .content button{
+    padding: 0.5rem 1rem;
+
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    color: white;
+    background-color: orange;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+    drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.container .content button:hover{
+    cursor: pointer;
+
+    padding: 0.7rem 1.2rem;
 }

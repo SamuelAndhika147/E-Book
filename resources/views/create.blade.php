@@ -58,10 +58,10 @@
             <div class="left">
                 <div class="label">
                     <label for="">Category Book</label>
-                    <select name="category" placeholder="Input book's category">
-                        <option hidden>Input book's category</option>
-                        @foreach ($category as $item)
-                        <option value="{{ $item->category }}">{{ $item->category }}</option>
+                    <select name="kategori" placeholder="Input book's category">
+                        @foreach ($kategori as $item)
+                        <option value="" hidden>Select Category</option>
+                        <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -83,32 +83,40 @@
             </div>
         </div>
 
-        <button type="submit">Submit</button>
+        <div class="label">
+            <label for="">PDF</label>
+            <input type="file" class="file" src="" alt="" name="pdf">
+        </div>
+
+        <button type="submit"><span>Submit</span></button>
     </form>
 </div>
 
-    <div class="table-book" data-aos="flip-up" data-aos-duration="800">
-        <table>
+<div class="table-book" data-aos="flip-up" data-aos-duration="800">
+    <table id="example">
+        <thead>
             <tr>
                 <th>No</th>
                 <th>Book ID</th>
-                <th>Category ID</th>
+                <th>Category</th>
                 <th>Title</th>
                 <th>Writer</th>
                 <th>Publisher</th>
                 <th>ISBN</th>
                 <th>Synopsis</th>
-                <th>Cover Book</th>
+                <th>PDF Book</th>
                 <th>Action</th>
             </tr>
-            @php
-            $no=1;
-            @endphp
+        </thead>
+        @php
+        $no=1;
+        @endphp
+        <tbody>
             @foreach ( $book as $no => $item)
             <tr>
                 <td>{{ ++$no }}</td>
                 <td>{{ $item->id }}</td>
-                <td>{{ $item->category }}</td>
+                <td>{{ $item->kategori }}</td>
                 <td>{{ $item->title }}</td>
                 <td>{{ $item->writer }}</td>
                 <td>{{ $item->publisher }}</td>
@@ -127,7 +135,19 @@
                 </td>
             </tr>
             @endforeach
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+
+</script>
 @endsection

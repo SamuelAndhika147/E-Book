@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('writer');
             $table->string('publisher');
-            $table->enum('category', ['Novel', 'Fiksi']);
+            $table->enum('kategori', ['Novel', 'Manga', 'Fiksi', 'Fantasy', 'Skripsi', 'Laporan', 'Test', 'Non-Fiksi', 'Tech', 'IT', 'News', 'Support', 'DIY', 'Short Story', 'Manhwa', 'Doujin', 'Inspiration', 'Horor', '+18', 'Politic']);
             $table->string('image');
+            $table->string('pdf');
             $table->string('isbn');
             $table->text('synopsis');
             $table->timestamps();
